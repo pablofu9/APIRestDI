@@ -8,7 +8,7 @@
 import Foundation
 
 /// A protocol defining the requirements for making API calls.
-protocol APICall {
+public protocol APICall {
     
     /// The path of the API endpoint.
     var path: String { get }
@@ -27,7 +27,7 @@ protocol APICall {
 }
 
 /// An enumeration representing HTTP methods.
-enum HTTPMethod: String {
+public enum HTTPMethod: String {
     case get  = "GET"
     case post = "POST"
     case put = "PUT"
