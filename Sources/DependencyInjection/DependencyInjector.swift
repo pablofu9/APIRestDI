@@ -26,20 +26,22 @@ public actor DependencyInjector {
 }
 
 /// Property wrapper to simplify injection
-@propertyWrapper struct Inject<T> {
-    var wrappedValue: T
-    
-    init() {
+@propertyWrapper
+public struct Inject<T> {
+    public var wrappedValue: T
+
+    public init() {
         self.wrappedValue = DependencyInjector.resolve()
         print("Dependency injected <-", String(describing: type(of: self.wrappedValue)))
     }
 }
 
 /// Property wrapper to simplify providing
-@propertyWrapper struct Provider<T> {
-    var wrappedValue: T
-    
-    init(wrappedValue: T) {
+@propertyWrapper
+public struct Provider<T> {
+    public var wrappedValue: T
+
+    public init(wrappedValue: T) {
         self.wrappedValue = wrappedValue
         DependencyInjector.register(dependency: wrappedValue)
         print("Dependency provided ->", String(describing: type(of: self.wrappedValue)))
