@@ -13,10 +13,10 @@ public final class Dependencies {
     
     /// A shared instance of `Dependencies` to be accessed throughout the app.
     /// Marked as `@MainActor` to ensure thread-safe usage on the main thread.
-    @MainActor static var shared: Dependencies = .init()
+    @MainActor public static var shared: Dependencies = .init()
     
     /// A configured `URLSession` instance with custom settings for timeouts, cache policy, and connectivity.
-    var session: URLSession {
+    public var session: URLSession {
         let configuration = URLSessionConfiguration.default
         
         // Set timeout for individual requests (in seconds)
