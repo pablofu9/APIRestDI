@@ -32,32 +32,23 @@ public extension WebRepository {
     ///   - endpoint: The endpoint to call.
     ///   - httpCodes: The expected range of HTTP status codes for success.
     /// - Returns: A decoded response of type `T`.
-    func callResult<T: Codable>(
-        endpoint: APICall,
-        httpCodes: HTTPCodes = .success
-    ) async -> Result<T, APIError> {
+    func call<T: Codable>(endpoint: APICall, httpCodes: HTTPCodes = .success) async throws -> T {
+        let request = try await endpoint.urlRequest(baseURL: baseURL)
+        
+        let (data, response) = try await session.data(for: request)
+        
+        guard let code = (response as? HTTPURLResponse)?.statusCode else {
+            throw APIError.unexpectedResponse
+        }
+        
+        guard httpCodes.contains(code) else {
+            throw APIError.httpCode(code)
+        }
+        
         do {
-            let request = try await endpoint.urlRequest(baseURL: baseURL)
-            let (data, response) = try await session.data(for: request)
-
-            guard let code = (response as? HTTPURLResponse)?.statusCode else {
-                return .failure(.unexpectedResponse)
-            }
-
-            guard httpCodes.contains(code) else {
-                return .failure(.httpCode(code))
-            }
-
-            do {
-                let decoded = try decoder.decode(T.self, from: data)
-                return .success(decoded)
-            } catch {
-                return .failure(.decoding(error))
-            }
-        } catch let error as APIError {
-            return .failure(error)
+            return try decoder.decode(T.self, from: data)
         } catch {
-            return .failure(.unexpectedResponse)
+            throw APIError.decoding(error)
         }
     }
 }
