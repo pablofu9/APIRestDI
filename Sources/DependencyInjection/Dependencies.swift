@@ -9,7 +9,7 @@
 import Foundation
 
 /// A singleton class responsible for providing shared app dependencies.
-final class Dependencies {
+public final class Dependencies {
     
     /// A shared instance of `Dependencies` to be accessed throughout the app.
     /// Marked as `@MainActor` to ensure thread-safe usage on the main thread.
@@ -44,12 +44,12 @@ final class Dependencies {
     private var configurator: ((Bool) -> Void)?
 
     /// Register external configuration logic
-    func registerConfigurator(_ block: @escaping (Bool) -> Void) {
+    public func registerConfigurator(_ block: @escaping (Bool) -> Void) {
         self.configurator = block
     }
 
     /// Called at app startup to register dependencies (real or mock)
-    func provideDependencies(testMode: Bool = false) {
+    public func provideDependencies(testMode: Bool = false) {
         configurator?(testMode)
     }
 }
