@@ -19,14 +19,14 @@ public protocol WebRepository {
     var decoder: JSONDecoder { get }
 }
 
-extension WebRepository {
+public extension WebRepository {
     /// Default JSON decoder used when not provided explicitly.
     var decoder: JSONDecoder {
         return JSONDecoder()
     }
 }
 
-extension WebRepository {
+public extension WebRepository {
     /// Performs an asynchronous API call and decodes the response.
     /// - Parameters:
     ///   - endpoint: The endpoint to call.
@@ -62,7 +62,7 @@ extension WebRepository {
     }
 }
 
-extension URLSession {
+public extension URLSession {
     /// Provides a URLSession instance for mocked responses only.
     static var mockedResponsesOnly: URLSession {
         let configuration = URLSessionConfiguration.default
@@ -73,11 +73,9 @@ extension URLSession {
 }
 
 /// A property wrapper for ensuring the base URL ends with a slash.
-@propertyWrapper struct BaseURLSlashed {
-    /// The base URL string.
-    var wrappedValue: String
-
-    init(wrappedValue: String) {
+@propertyWrapper public struct BaseURLSlashed {
+    public var wrappedValue: String
+    public init(wrappedValue: String) {
         self.wrappedValue = wrappedValue
     }
 }

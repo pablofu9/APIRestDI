@@ -35,7 +35,7 @@ public enum HTTPMethod: String {
 }
 
 /// An enumeration representing possible API errors.
-enum APIError: Error {
+public enum APIError: Error {
     case invalidURL
     case unauthorized
     case httpCode(HTTPCode)
@@ -45,7 +45,7 @@ enum APIError: Error {
 
 /// An extension to provide localized descriptions for API errors.
 extension APIError: LocalizedError {
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .invalidURL: return "Invalid URL"
         case .unauthorized: return "Unauthorized"
@@ -57,7 +57,7 @@ extension APIError: LocalizedError {
 }
 
 /// An extension to provide default implementations for APICall protocol methods.
-extension APICall {
+public extension APICall {
     
     /// Constructs a URLRequest for the API call.
     /// - Parameter baseURL: The base URL for the API.
@@ -80,19 +80,19 @@ extension APICall {
 }
 
 /// Type alias representing HTTP status code.
-typealias HTTPCode = Int
+public typealias HTTPCode = Int
 
 /// Type alias representing a range of HTTP status codes.
-typealias HTTPCodes = Range<HTTPCode>
+public typealias HTTPCodes = Range<HTTPCode>
 
 /// An extension to provide common HTTP status code ranges.
-extension HTTPCodes {
+public extension HTTPCodes {
     static let success = 200 ..< 300
     static let unauthorized = 401
 }
 
 /// An extension to provide NSString compatibility for String.
-extension String {
+public extension String {
     var ns: NSString { return self as NSString }
     
     /// Appends a path component to the current string.
